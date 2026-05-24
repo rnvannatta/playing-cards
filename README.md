@@ -15,4 +15,4 @@ Change png height with `make png HEIGHT=1024`
 
 Inkscape can't run in parallel because of DBUS.
 
-Forked from https://github.com/hayeah/playing-cards-assets. The original build pipeline and asset processing have been replaced with an up to date Inkscape-based workflow.
+Forked from https://github.com/hayeah/playing-cards-assets. The original build pipeline and asset processing have been fully rewritten with an up to date Inkscape-based workflow.

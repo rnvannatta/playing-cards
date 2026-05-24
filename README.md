@@ -5,7 +5,7 @@ Public domain playing card assets.
 * [Playing Card Source](https://code.google.com/p/vector-playing-cards/)
 * [Card Back Source](https://commons.wikimedia.org/wiki/File:Tiled_blue_broken_line_rhombus_card_back.svg)
 
-Mildly processed to remove the borders. Also deleted the ugly fake specular highlights from the aces. Requires xmlstarlet to process the svgs and inkscape to render them.
+Mildly processed to remove the borders. Also included a version of the aces without the fake specular highlights. Requires xmlstarlet to process the svgs and inkscape to render them.
 
 ```
 make -j svg && make png

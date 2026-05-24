@@ -1,17 +1,18 @@
-# Playing Cards iOS Assets
+# PNG & SVG Playing Cards
 
-Courtesy of https://code.google.com/p/vector-playing-cards/ (public domain)
+Public domain playing card assets.
 
-With some additional processing to remove borders of cards.
+* [Playing Card Source](https://code.google.com/p/vector-playing-cards/)
+* [Card Back Source](https://commons.wikimedia.org/wiki/File:Tiled_blue_broken_line_rhombus_card_back.svg)
 
-Build the png assets with four parallel processes:
+Mildly processed to remove the borders. Also deleted the ugly fake specular highlights from the aces. Requires xmlstarlet to process the svgs and inkscape to render them.
 
 ```
-make -j 4 png
+make -j svg && make png
 ```
 
-# Tools
+Change png height with `make png HEIGHT=1024`
 
-[xmlstartlet](http://xmlstar.sourceforge.net/) to remove the border path from svg.
+Inkscape can't run in parallel because of DBUS.
 
-[svg2png](https://github.com/domenic/svg2png) to convert svg to png (based on phantomjs)
+Forked from https://github.com/hayeah/playing-cards-assets. The original build pipeline and asset processing have been replaced with an up to date Inkscape-based workflow.

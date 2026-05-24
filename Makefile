@@ -1,28 +1,30 @@
-svgin=svg-cards
-svgout=svg-out
-pngout=png-out
+# DBUS BRINGS DBUGS :(
+.NOTPARALLEL: png
 
-svgin_files=$(shell ls svg-cards/*.svg)
-svgout_files=$(patsubst $(svgin)/%,$(svgout)/%,$(svgin_files))
-pngout_files=$(patsubst $(svgout)/%.svg,$(pngout)/%.png,$(svgout_files))
+HEIGHT=512
 
-$(svgout):
-	mkdir -p $(svgout)
+SVGIN=svg-cards
+SVGOUT=svg-out
+PNGOUT=png-out
 
-$(pngout):
-	mkdir -p $(pngout)
+SVGIN_FILES=$(wildcard svg-cards/*.svg)
+SVGOUT_FILES=$(patsubst $(SVGIN)/%,$(SVGOUT)/%,$(SVGIN_FILES))
+PNGOUT_FILES=$(patsubst $(SVGOUT)/%.svg,$(PNGOUT)/%.png,$(SVGOUT_FILES))
 
-svg: $(svgout) $(svgout_files)
+png: $(PNGOUT_FILES)
+svg: $(SVGOUT_FILES)
 
-png: svg $(pngout) $(pngout_files)
+$(SVGOUT)/%.svg: $(SVGIN)/%.svg
+	@mkdir -p $(dir $@)
+	xmlstarlet edit \
+  -i '//_:path[@id="path5"]' -t attr -n stroke -v none \
+  -u '//_:path[@id="path5"]/@stroke' -v none $< > $@
 
-$(svgout)/%.svg: $(svgin)/%.svg
-	xmlstarlet edit -d '//_:path[@id="path5"]' $< > $@
+$(PNGOUT)/%.png: $(SVGOUT)/%.svg
+	@mkdir -p $(dir $@)
+	inkscape --export-type=png $< --export-filename=$@ --export-height=$(HEIGHT)
 
-$(pngout)/%.png: $(svgout)/%.svg
-	node svg2png.js $< $@
+clean:
+	rm -rf $(SVGOUT) $(PNGOUT)
 
-clear:
-	rm -r $(svgout) $(pngout)
-
-.PHONY: clear svg png
+.PHONY: clean svg png
